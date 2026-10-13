@@ -8,7 +8,14 @@ def get_db():
 
 #起動時にテーブルを作る
 db = get_db()
-db.execute("CREATE TABLE IF NOT EXISTS series (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)")
+db.execute("""CREATE TABLE IF NOT EXISTS series (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            title TEXT NOT NULL UNIQUE)""")
+db.execute("""CREATE TABLE IF NOT EXISTS volumes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            series_id INTEGER NOT NULL REFERENCES series(id), 
+            number INTEGER NOT NULL, 
+            UNIQUE(series_id, number))""")
 db.close()
 
 @app.route("/", methods=["GET", "POST"])
