@@ -23,6 +23,9 @@ def index():
     db = get_db()
     if request.method == "POST":
         title = request.form["title"]
+        start = request.form["start"]
+        end = request.form["end"]
+        print(int(start, end))
         db.execute("INSERT OR IGNORE INTO series (title) VALUES (?)", (title,))
         db.commit()
         db.close()
